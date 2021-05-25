@@ -16,12 +16,14 @@ public class ABM {
     public static Scanner Teclado = new Scanner(System.in);
 
     protected ClienteManager ABMCliente = new ClienteManager();
+    protected PrestamoManager ABMPrestamo = new PrestamoManager();//instancio Prestamo
 
     public void iniciar() throws Exception {
 
         try {
 
             ABMCliente.setup();
+            ABMPrestamo.setup();//me daba error porque no puse esto
 
             printOpciones();
 
@@ -54,6 +56,10 @@ public class ABM {
 
                     case 5:
                         listarPorNombre();
+                        break;
+
+                    case 6:
+                        listarPrestamos();
                         break;
 
                     default:
@@ -245,6 +251,15 @@ public class ABM {
         }
     }
 
+    //Creo un metodo para listar Prestamos
+    public void listarPrestamos() {
+
+        List<Prestamo> todos = ABMPrestamo.buscarTodos();
+        for (Prestamo p : todos) {
+            mostrarPrestamo(p);
+        }
+    } 
+
     public void listarPorNombre() {
 
         System.out.println("Ingrese el nombre:");
@@ -269,6 +284,20 @@ public class ABM {
 
         System.out.println(" Fecha Nacimiento: " + fechaNacimientoStr);
     }
+    //Hago lo mismo que arriba pero para MOSTRAR un PRESTAMO
+    public void mostrarPrestamo(Prestamo prestamo) {
+
+        System.out.print("Id: " + prestamo.getPrestamoId() + " Cliente: " + prestamo.getCliente().getNombre() + " Importe: "
+                + prestamo.getImporte() + " Cuotas: " + prestamo.getCuotas());
+
+        //if (cliente.getDireccionAlternativa() != null)
+        //    System.out.print(" Alternativo: " + cliente.getDireccionAlternativa());
+
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaPrestamoStr = formatter.format(prestamo.getFecha());
+
+        System.out.println(" Fecha Prestamo: " + fechaPrestamoStr);
+    }
 
     public static void printOpciones() {
         System.out.println("=======================================");
@@ -278,6 +307,7 @@ public class ABM {
         System.out.println("3. Para modificar un cliente.");
         System.out.println("4. Para ver el listado.");
         System.out.println("5. Buscar un cliente por nombre especifico(SQL Injection)).");
+        System.out.println("6. Ver listado de prestamos");
         System.out.println("0. Para terminar.");
         System.out.println("");
         System.out.println("=======================================");

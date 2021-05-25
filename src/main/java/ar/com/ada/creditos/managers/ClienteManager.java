@@ -97,6 +97,7 @@ public class ClienteManager {
      * 
      * @return
      */
+    
     public List<Cliente> buscarTodos() {
 
         Session session = sessionFactory.openSession();

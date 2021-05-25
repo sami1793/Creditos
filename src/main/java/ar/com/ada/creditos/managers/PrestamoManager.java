@@ -100,7 +100,7 @@ public class PrestamoManager {
         //query = session.createQuery("From Obse")
         List<Prestamo> todos = query.getResultList();
 
-        return todos;
+        return todos;//
 
     }
 
