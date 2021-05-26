@@ -61,6 +61,10 @@ public class ABM {
                     case 6:
                         listarPrestamos();
                         break;
+                    
+                    case 7:
+                        cargarPrestamo();
+                        break;
 
                     default:
                         System.out.println("La opcion no es correcta.");
@@ -299,6 +303,34 @@ public class ABM {
         System.out.println(" Fecha Prestamo: " + fechaPrestamoStr);
     }
 
+    public void cargarPrestamo() throws Exception{
+        Prestamo prestamo = new Prestamo();// inicializo un objeto prestamo
+
+        System.out.println("Ingrese el importe del prestamo:");
+        prestamo.setImporte(new BigDecimal(Teclado.nextInt()));
+        System.out.println("Ingrese la cantidad de cuotas del prestamo:");
+        prestamo.setCuotas(Teclado.nextInt());
+        Teclado.nextLine();        
+        System.out.println("Ingrese fecha del prestamo:");
+        Date fecha = null;
+        DateFormat dateformatArgentina = new SimpleDateFormat("dd/MM/yy");
+
+        fecha = dateformatArgentina.parse(Teclado.nextLine());
+        prestamo.setFecha(fecha);
+
+        System.out.println("Ingrese cliente id del cliente a quien asigna el prestamo:");
+        prestamo.setCliente(ABMCliente.buscarPorClienteId(Teclado.nextInt()));
+
+        prestamo.setFechaAlta(new Date());
+        
+        
+        ABMPrestamo.create(prestamo);
+
+       
+        System.out.println("Cliente generado con exito.  " + prestamo);
+
+    }
+
     public static void printOpciones() {
         System.out.println("=======================================");
         System.out.println("");
@@ -308,6 +340,7 @@ public class ABM {
         System.out.println("4. Para ver el listado.");
         System.out.println("5. Buscar un cliente por nombre especifico(SQL Injection)).");
         System.out.println("6. Ver listado de prestamos");
+        System.out.println("7. Cargar prestamo a un cliente");
         System.out.println("0. Para terminar.");
         System.out.println("");
         System.out.println("=======================================");
