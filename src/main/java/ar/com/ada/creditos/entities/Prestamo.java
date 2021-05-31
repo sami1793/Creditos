@@ -1,11 +1,15 @@
 package ar.com.ada.creditos.entities;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 //import java.sql.Date;//no se porque se me puso este
 //import java.util.Date;---->preguntar esto a profe
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
+
+
 
 @Entity
 @Table(name="prestamo")
@@ -33,7 +37,12 @@ public class Prestamo {
     @JoinColumn(name="cliente_id", referencedColumnName = "cliente_id")//en la otra tabla mappin
     private Cliente cliente;//cliente_id es de tipo Cliente
 
+    @OneToMany(mappedBy = "prestamo", cascade= CascadeType.ALL)//prestamo de cancelacion
+    private List <Cancelacion> cancelaciones = new ArrayList<>(); //prestamo tiene muchas cancelaciones
+
     
+    
+
     //GETTERS Y SETTERS
     public int getPrestamoId() {
         return prestamoId;
@@ -96,6 +105,14 @@ public class Prestamo {
     public void setEstadoId(EstadoPrestamoEnum estadoId) { //pasamos un parametro tipo enumerado
                                                         //pero guardamos como int en estadoId
         this.estadoId = estadoId.getValue();
+    }
+
+    public List<Cancelacion> getCancelaciones() {
+        return cancelaciones;
+    }
+
+    public void setCancelaciones(List<Cancelacion> cancelaciones) {
+        this.cancelaciones = cancelaciones;
     }
 
     public enum EstadoPrestamoEnum {
