@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import ar.com.ada.creditos.entities.*;
+import ar.com.ada.creditos.entities.Prestamo.EstadoPrestamoEnum;
 import ar.com.ada.creditos.excepciones.*;
 import ar.com.ada.creditos.managers.*;
 
@@ -117,6 +118,7 @@ public class ABM {
 
 
         //Pongo a un prestamo de 10mil a un cliente recien creado
+        //Y automaticamente pongo el prestamo en estado aprobado
         Prestamo prestamo =new Prestamo();
 
         prestamo.setImporte(new BigDecimal(10000));//como es BigDecimal
@@ -125,6 +127,8 @@ public class ABM {
         prestamo.setFecha(new Date()); //pone la fecha actual
         prestamo.setFechaAlta(new Date());
         prestamo.setCliente(cliente);//pongo cliente al prestamo
+        //uso el enumerado que es mas CLARO que usar el INT
+        prestamo.setEstadoId(EstadoPrestamoEnum.APROBADO);
 
         
         ABMCliente.create(cliente);
