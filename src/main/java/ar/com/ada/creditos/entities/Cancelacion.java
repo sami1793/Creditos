@@ -29,7 +29,6 @@ public class Cancelacion {
 
 
 
-
     public int getCancelacionId() {
         return cancelacionId;
     }
