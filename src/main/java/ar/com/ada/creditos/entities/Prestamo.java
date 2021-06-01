@@ -37,7 +37,7 @@ public class Prestamo {
     @JoinColumn(name="cliente_id", referencedColumnName = "cliente_id")//en la otra tabla mappin
     private Cliente cliente;//cliente_id es de tipo Cliente
 
-    @OneToMany(mappedBy = "prestamo", cascade= CascadeType.ALL)//prestamo de cancelacion
+    @OneToMany(mappedBy = "prestamo", cascade= CascadeType.ALL, fetch= FetchType.EAGER)//prestamo de cancelacion
     private List <Cancelacion> cancelaciones = new ArrayList<>(); //prestamo tiene muchas cancelaciones
 
     

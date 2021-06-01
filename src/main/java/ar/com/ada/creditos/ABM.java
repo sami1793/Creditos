@@ -18,6 +18,7 @@ public class ABM {
 
     protected ClienteManager ABMCliente = new ClienteManager();
     protected PrestamoManager ABMPrestamo = new PrestamoManager();//instancio Prestamo
+    protected CancelacionManager ABMCancelacion= new CancelacionManager();
 
     public void iniciar() throws Exception {
 
@@ -25,6 +26,7 @@ public class ABM {
 
             ABMCliente.setup();
             ABMPrestamo.setup();//me daba error porque no puse esto
+            ABMCancelacion.setup();
 
             printOpciones();
 
@@ -65,6 +67,9 @@ public class ABM {
                     
                     case 7:
                         cargarPrestamo();
+                        break;
+                    case 8:
+                        crearCancelacion();
                         break;
 
                     default:
@@ -335,6 +340,33 @@ public class ABM {
 
     }
 
+    public void crearCancelacion() throws Exception{
+        Cancelacion cancelacion = new Cancelacion();// inicializo un objeto cancelacion
+
+        System.out.println("Ingrese el prestamoId del prestamo que quiere pagar:");
+        Prestamo prestamo= ABMPrestamo.read(Teclado.nextInt());//devuleve prestamo con id
+        cancelacion.setPrestamo(prestamo);
+
+        System.out.println(prestamo);
+
+        System.out.println("Ingrese el importe que sea pagar: ");
+        cancelacion.setImporte(new BigDecimal(Teclado.nextInt()));
+
+        System.out.println("Ingrese la cuota que desea pagar:");
+        cancelacion.setCuota(Teclado.nextInt());
+        Teclado.nextLine();       
+       
+        
+        cancelacion.setFechaCancelacion(new Date());
+        
+        
+        ABMCancelacion.create(cancelacion);
+
+       
+        System.out.println("Pago realizado  " + cancelacion);
+
+    }
+
     public static void printOpciones() {
         System.out.println("=======================================");
         System.out.println("");
@@ -345,6 +377,7 @@ public class ABM {
         System.out.println("5. Buscar un cliente por nombre especifico(SQL Injection)).");
         System.out.println("6. Ver listado de prestamos");
         System.out.println("7. Cargar prestamo a un cliente");
+        System.out.println("8. Pagar prestamo");
         System.out.println("0. Para terminar.");
         System.out.println("");
         System.out.println("=======================================");

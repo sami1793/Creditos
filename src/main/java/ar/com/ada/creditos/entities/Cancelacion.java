@@ -19,7 +19,7 @@ public class Cancelacion {
     @JoinColumn(name="prestamo_id",referencedColumnName = "prestamo_id")//como se llama en esta y en la otra
     private Prestamo prestamo; //no es de tipo int 
 
-    @Column(name="fecha_cancelecion")
+    @Column(name="fecha_cancelacion")
     private Date fechaCancelacion;
 
     private BigDecimal importe;
