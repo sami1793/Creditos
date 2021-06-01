@@ -1,6 +1,9 @@
 package ar.com.ada.creditos.managers;
 
+import java.math.BigDecimal;
 import java.util.logging.Level;
+
+import javax.persistence.Query;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -57,5 +60,14 @@ public class CancelacionManager {
     }
     
 
-    
+    public BigDecimal sumaCancelacion(int prestamoId){
+
+        Session session = sessionFactory.openSession();
+
+        Query query = session.createNativeQuery("SELECT SUM(importe) from cancelacion where prestamo_id="+prestamoId, Cancelacion.class);
+        
+        BigDecimal suma = (BigDecimal) query.getSingleResult();
+
+        return suma;
+    }
 }

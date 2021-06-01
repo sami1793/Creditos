@@ -367,6 +367,21 @@ public class ABM {
 
     }
 
+    public boolean estaCancelado(int prestamoId){
+        Prestamo prestamo= ABMPrestamo.read(Teclado.nextInt());//devuleve prestamo con id
+
+        BigDecimal importePrestamo = prestamo.getImporte();
+
+        BigDecimal sumaCancelacion= ABMCancelacion.sumaCancelacion(prestamoId);
+
+        if (sumaCancelacion.compareTo(importePrestamo) == 0) //si son iguales Big decimal
+        
+            return true;
+        else return false;           
+
+        
+    }
+
     public static void printOpciones() {
         System.out.println("=======================================");
         System.out.println("");
