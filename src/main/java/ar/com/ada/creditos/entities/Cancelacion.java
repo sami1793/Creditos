@@ -13,6 +13,7 @@ public class Cancelacion {
 
     @Id
     @Column(name="cancelacion_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //AUTOINCREMENTAL
     private int cancelacionId;
 
     @ManyToOne//muchas cacelacion para 1 prestamo

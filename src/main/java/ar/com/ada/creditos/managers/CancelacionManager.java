@@ -11,6 +11,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+
+
 import ar.com.ada.creditos.entities.Cancelacion;
 
 public class CancelacionManager {
@@ -62,11 +64,16 @@ public class CancelacionManager {
 
     public BigDecimal sumaCancelacion(int prestamoId){
 
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.openSession();        
 
-        Query query = session.createNativeQuery("SELECT SUM(importe) from cancelacion where prestamo_id="+prestamoId, Cancelacion.class);
+        Query query = session.createNativeQuery("SELECT SUM(importe) from cancelacion where prestamo_id= ?");// no tiene 2do parametro porque no quiero tranformar en una clase
+        query.setParameter(1, prestamoId);
+        double resultado = ((Number)query.getSingleResult()).doubleValue();
         
-        BigDecimal suma = (BigDecimal) query.getSingleResult();
+        BigDecimal suma = new BigDecimal(resultado);
+
+        session.close();
+        
 
         return suma;
     }

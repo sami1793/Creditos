@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.NaturalId;
 
 import ar.com.ada.creditos.excepciones.*;
@@ -33,7 +35,8 @@ public class Cliente {
     private Date fechaNacimiento;
 
     //un solo cliente por cada prestamo . uno a muchos desde cliente
-    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL)
+    
+    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL)//, fetch = FetchType.EAGER)
     private List <Prestamo> prestamos = new ArrayList<>();
     
    

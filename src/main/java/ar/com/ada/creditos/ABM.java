@@ -344,11 +344,14 @@ public class ABM {
         Cancelacion cancelacion = new Cancelacion();// inicializo un objeto cancelacion
 
         System.out.println("Ingrese el prestamoId del prestamo que quiere pagar:");
-        Prestamo prestamo= ABMPrestamo.read(Teclado.nextInt());//devuleve prestamo con id
+        int prestamoId=Teclado.nextInt();
+        Prestamo prestamo= ABMPrestamo.read(prestamoId);//devuleve prestamo con id
+
         cancelacion.setPrestamo(prestamo);
 
-        System.out.println(prestamo);
+        //System.out.println(prestamo);
 
+        
         System.out.println("Ingrese el importe que sea pagar: ");
         cancelacion.setImporte(new BigDecimal(Teclado.nextInt()));
 
@@ -362,23 +365,32 @@ public class ABM {
         
         ABMCancelacion.create(cancelacion);
 
+        
        
         System.out.println("Pago realizado  " + cancelacion);
+
+        if(estaCancelado(prestamoId)){
+            prestamo.setEstadoId(EstadoPrestamoEnum.CANCELADO);
+            System.out.println("El prestamo quedó CANCELADO");
+        }
+        else 
+        System.out.println("Aun falta pagar");   
 
     }
 
     public boolean estaCancelado(int prestamoId){
-        Prestamo prestamo= ABMPrestamo.read(Teclado.nextInt());//devuleve prestamo con id
+        Prestamo prestamo= ABMPrestamo.read(prestamoId);//devuleve prestamo con id
 
         BigDecimal importePrestamo = prestamo.getImporte();
 
-        BigDecimal sumaCancelacion= ABMCancelacion.sumaCancelacion(prestamoId);
+        BigDecimal suma= ABMCancelacion.sumaCancelacion(prestamoId);
+       // BigDecimal sumaCancelacion = new BigDecimal(10000);
 
-        if (sumaCancelacion.compareTo(importePrestamo) == 0) //si son iguales Big decimal
+        if (suma.compareTo(importePrestamo) >= 0) //si son iguales Big decimal
         
             return true;
-        else return false;           
-
+        else 
+            return false;
         
     }
 

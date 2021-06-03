@@ -9,6 +9,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 
 
 @Entity
@@ -37,7 +40,8 @@ public class Prestamo {
     @JoinColumn(name="cliente_id", referencedColumnName = "cliente_id")//en la otra tabla mappin
     private Cliente cliente;//cliente_id es de tipo Cliente
 
-    @OneToMany(mappedBy = "prestamo", cascade= CascadeType.ALL, fetch= FetchType.EAGER)//prestamo de cancelacion
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "prestamo", cascade= CascadeType.ALL)//, fetch= FetchType.EAGER)//prestamo de cancelacion
     private List <Cancelacion> cancelaciones = new ArrayList<>(); //prestamo tiene muchas cancelaciones
 
     
@@ -95,6 +99,14 @@ public class Prestamo {
         //this.cliente.agregarPrestamo(this);//BIDIRECCIONAL con funcion 
     }
 
+    public List<Cancelacion> getCancelaciones() {
+        return cancelaciones;
+    }
+
+    public void setCancelaciones(List<Cancelacion> cancelaciones) {
+        this.cancelaciones = cancelaciones;
+    }
+
     //ENUMERADO es un tipo de clase
     public EstadoPrestamoEnum getEstadoId() {
 
@@ -107,13 +119,7 @@ public class Prestamo {
         this.estadoId = estadoId.getValue();
     }
 
-    public List<Cancelacion> getCancelaciones() {
-        return cancelaciones;
-    }
-
-    public void setCancelaciones(List<Cancelacion> cancelaciones) {
-        this.cancelaciones = cancelaciones;
-    }
+    
 
     public enum EstadoPrestamoEnum {
         SOLICITADO(1), //estos son constructores con un solo parametro
